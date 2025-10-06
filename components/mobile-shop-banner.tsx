@@ -12,7 +12,7 @@ const MobileShopBanner: React.FC = () => {
   const [activeProduct, setActiveProduct] = useState(0)
   const [visibleCards, setVisibleCards] = useState<number[]>([])
 
-  const texts = ["NEW MOBILES", "SECOND HAND MOBILES", "ACCESSORIES"]
+  const texts = ["NEW MOBILES", "USED MOBILES", "ACCESSORIES"]
 
   // Updated scroll-based showcase data
   const showcaseData = [
