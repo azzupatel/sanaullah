@@ -12,7 +12,8 @@ const MobileShopBanner: React.FC = () => {
   const [activeProduct, setActiveProduct] = useState(0)
   const [visibleCards, setVisibleCards] = useState<number[]>([])
 
-  const texts = ["NEW MOBILES", "USED MOBILES", "ACCESSORIES"]
+  // Texts array in correct order
+  const texts = ["NEW MOBILES", "SECOND-HAND MOBILE", "ACCESSORIES"]
 
   // Updated scroll-based showcase data
   const showcaseData = [
@@ -96,21 +97,32 @@ const MobileShopBanner: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    const typeSpeed = isDeleting ? 40 : 100
     const currentFullText = texts[currentIndex]
+    
+    // Calculate typing speed based on text length for consistent timing
+    const baseTypeSpeed = 80
+    const baseDeleteSpeed = 40
+    const basePauseTime = 2000
+    
+    // Adjust speeds based on text length to maintain consistent timing
+    const typeSpeed = isDeleting ? baseDeleteSpeed : baseTypeSpeed
+    const pauseTime = basePauseTime
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
+        // Typing phase - type one character at a time
         if (currentText.length < currentFullText.length) {
           setCurrentText(currentFullText.substring(0, currentText.length + 1))
         } else {
-          // Pause for 2-3 seconds when full text is displayed
-          setTimeout(() => setIsDeleting(true), 2000)
+          // Pause when full text is displayed
+          setTimeout(() => setIsDeleting(true), pauseTime)
         }
       } else {
+        // Deleting phase - delete one character at a time
         if (currentText.length > 0) {
           setCurrentText(currentText.substring(0, currentText.length - 1))
         } else {
+          // When completely deleted, move to next text
           setIsDeleting(false)
           setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length)
         }
@@ -294,10 +306,10 @@ const MobileShopBanner: React.FC = () => {
           transform: translateY(0);
         }
 
-        /* Hero section */
+        /* Hero section - UPDATED HEIGHT AND SPACING */
         .info-section {
-          height: 100vh;
-          min-height: 780px;
+          height: 80vh;
+          min-height: 600px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -306,6 +318,7 @@ const MobileShopBanner: React.FC = () => {
           user-select: none;
           overflow: hidden;
           background: #ffffff;
+          padding: 40px 0;
         }
 
         .dark .info-section {
@@ -326,11 +339,15 @@ const MobileShopBanner: React.FC = () => {
         }
 
         .left-part {
-          padding: 20px 0 0;
+          padding: 0;
           overflow: hidden;
           position: relative;
           z-index: 2;
           width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
 
         .left-part h1 {
@@ -347,6 +364,7 @@ const MobileShopBanner: React.FC = () => {
           flex-direction: column;
           align-items: center;
           justify-content: center;
+          width: 100%;
         }
 
         .dark .left-part h1 {
@@ -361,6 +379,10 @@ const MobileShopBanner: React.FC = () => {
           margin-top: 20px;
           font-family: "Space Grotesk", sans-serif;
           font-weight: 900;
+          text-align: center;
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .dark .left-part h1 .text {
@@ -385,6 +407,23 @@ const MobileShopBanner: React.FC = () => {
         .left-part.animate-in h1 .char {
           opacity: 1;
           transform: translateY(0);
+        }
+
+        /* Blinking cursor animation */
+        .text::after {
+          content: '|';
+          animation: blink 1s infinite;
+          color: #059669;
+          font-weight: 300;
+        }
+
+        .dark .text::after {
+          color: #10b981;
+        }
+
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
         }
 
         /* Delay each character */
@@ -934,7 +973,7 @@ const MobileShopBanner: React.FC = () => {
           box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* Responsive adjustments */
+        /* Responsive adjustments - UPDATED MOBILE VIEW FOR HERO SECTION */
         @media screen and (max-width: 1024px) {
           .showcase-container {
             grid-template-columns: 1fr;
@@ -967,6 +1006,36 @@ const MobileShopBanner: React.FC = () => {
         }
 
         @media screen and (max-width: 768px) {
+          /* Updated Hero Section for Mobile */
+          .info-section {
+            height: 70vh;
+            min-height: 500px;
+            padding: 20px 0;
+          }
+
+          .hero-content {
+            padding: 0 20px;
+          }
+
+          .left-part {
+            padding: 0;
+          }
+
+          .left-part h1 {
+            text-align: center;
+          }
+
+          .left-part h1 .d-flex {
+            justify-content: center;
+          }
+
+          .left-part h1 .text {
+            height: clamp(80px, 12vw, 100px);
+            margin-top: 15px;
+            text-align: center;
+            font-size: clamp(32px, 8vw, 60px);
+          }
+
           .why-choose-section {
             padding: 80px 0;
           }
@@ -1076,8 +1145,15 @@ const MobileShopBanner: React.FC = () => {
             padding-top: 60px;
           }
           
+          /* Updated Hero Section for Small Mobile */
+          .info-section {
+            height: 60vh;
+            min-height: 400px;
+            padding: 15px 0;
+          }
+          
           .left-part {
-            padding: 30px 12px 40px;
+            padding: 0 12px;
           }
           
           .left-part h1 {
@@ -1085,7 +1161,9 @@ const MobileShopBanner: React.FC = () => {
           }
           
           .left-part h1 .text {
-            height: clamp(60px, 12vw, 80px);
+            height: clamp(60px, 10vw, 80px);
+            margin-top: 10px;
+            font-size: clamp(24px, 8vw, 36px);
           }
 
           .why-choose-section {
@@ -1114,7 +1192,7 @@ const MobileShopBanner: React.FC = () => {
           }
 
           .showcase-description {
-            fontSize: 14px;
+            font-size: 14px;
           }
 
           .showcase-visual {
@@ -1193,6 +1271,15 @@ const MobileShopBanner: React.FC = () => {
         }
 
         @media screen and (max-width: 360px) {
+          .info-section {
+            height: 55vh;
+            min-height: 350px;
+          }
+          
+          .left-part h1 .text {
+            font-size: clamp(20px, 7vw, 28px);
+          }
+          
           .slider-container {
             height: 45vh;
             min-height: 350px;
@@ -1215,7 +1302,7 @@ const MobileShopBanner: React.FC = () => {
       <div className="mobile-shop-banner">
         <main>
           {/* Hero Section */}
-         <section className="info-section" id="home">
+          <section className="info-section" id="home">
             <div className="hero-content">
               <div className="left-part">
                 <h1>
