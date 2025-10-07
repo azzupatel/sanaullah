@@ -35,6 +35,8 @@ export default function Footer() {
           color: #fff;
           padding: 50px 20px 20px;
           text-align: center;
+          position: relative;
+          border-radius: 0 0 30px 30px;
         }
 
         .footer-top {
@@ -70,7 +72,7 @@ export default function Footer() {
         }
 
         .footer-links a:hover {
-          color: #38bdf8;
+          color:#059669;
         }
 
         .social-links {
@@ -86,7 +88,7 @@ export default function Footer() {
         }
 
         .social-link:hover {
-          color: #38bdf8;
+          color:#059669;
         }
 
         .footer-bottom {
@@ -95,12 +97,25 @@ export default function Footer() {
           padding-top: 20px;
           font-size: 14px;
           color: #aaa;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .design-credit {
+          font-size: 12px;
+          color: #666;
+          margin-top: 5px;
         }
 
         @media (max-width: 600px) {
           .footer-links {
             flex-direction: column;
             gap: 15px;
+          }
+          
+          .simple-footer {
+            border-radius: 0 0 20px 20px;
           }
         }
       `}</style>
@@ -110,8 +125,6 @@ export default function Footer() {
           <div className="footer-brand">
             <span>{data.company.name}</span>
           </div>
-
-         
 
           <div className="social-links">
             {socialLinks.map(({ icon: Icon, label, href }) => (
@@ -123,7 +136,10 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          &copy; 2025 {data.company.name}. All rights reserved.
+          <div>&copy; 2025 {data.company.name}. All rights reserved.</div>
+          <div className="design-credit">
+            Design by Patel Bro's Tech
+          </div>
         </div>
       </footer>
     </>
