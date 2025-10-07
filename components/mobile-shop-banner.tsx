@@ -15,66 +15,70 @@ const MobileShopBanner: React.FC = () => {
   // Texts array in correct order
   const texts = ["NEW MOBILES", "SECOND-HAND MOBILE", "ACCESSORIES"]
 
-  // Updated scroll-based showcase data
+  // Updated scroll-based showcase data - LIGHT MODE COLORS
   const showcaseData = [
-    {
-      id: 4,
-      title: "Quick Service & Warranty",
-      description: "Enjoy instant setup, after-sales support, and hassle-free warranty assistance.",
-      image: "/png4.png",
-      color: "#ea580c"
-    },
-    
-    {
-      id: 1,
-      title: "Wide Range of Mobiles",
-      description: "Find the latest smartphones from all top brands — all under one roof.",
-      image: "/png7.png",
-      color: "#059669"
-    },
     {
       id: 2,
       title: "Best Price Guarantee",
       description: "We offer genuine mobiles and accessories at the most competitive prices.",
-      image: "/png3.png",
-      color: "#7c3aed"
+      image: "/money.png",
+      lightColor: "#ffffff", // White for light mode
+      darkColor: "#0f172a"   // Original dark color
+    },
+    {
+      id: 4,
+      title: "Quick Service & Warranty",
+      description: "Enjoy instant setup, after-sales support, and hassle-free warranty assistance.",
+      image: "/ser.png",
+      lightColor: "#ffffff",
+      darkColor: "#0f172a"
+    },
+    {
+      id: 1,
+      title: "Wide Range of Mobiles",
+      description: "Find the latest smartphones from all top brands — all under one roof.",
+      image: "/brands.png",
+      lightColor: "#ffffff",
+      darkColor: "#0f172a"
     },
     {
       id: 3,
       title: "Expert Support",
       description: "Our team helps you choose the right device with honest guidance and expert advice.",
-      image: "/png8.png",
-      color: "#dc2626"
+      image: "/services.png",
+      lightColor: "#ffffff",
+      darkColor: "#0f172a"
     },
-    
   ];
 
   // Product slider data
   const productSlides = [
     {
-      image: "/png2.png",
+      image: "/wireless.png",
+      title: "Mobile Accessories",
+      description: "Complete range of cases, chargers, headphones and screen protectors.",
+      id: 3
+    },
+   
+    {
+      image: "/logos.png",
       title: "Latest Smartphones",
       description: "Get the newest models from top brands with amazing features and performance.",
       id: 1
     },
     {
-      image: "/png3.png",
-      title: "Certified Pre-owned",
+      image: "/pre.png",
+      title: "Pre-owned",
       description: "Quality tested second-hand devices with warranty and genuine parts.",
       id: 2
     },
-    {
-      image: "/png4.png",
-      title: "Mobile Accessories",
-      description: "Complete range of cases, chargers, headphones and screen protectors.",
-      id: 3
-    },
-    {
-      image: "/png5.png",
+     {
+      image: "/repair.png",
       title: "Repair Services",
       description: "Expert repair and maintenance services for all mobile brands.",
       id: 4
-    }
+    },
+    
   ];
 
   const showcaseRef = useRef<HTMLDivElement>(null)
@@ -571,7 +575,7 @@ const MobileShopBanner: React.FC = () => {
           color: #d1d5db;
         }
 
-        /* Image Side - RIGHT (Fixed Position) */
+        /* Image Side - RIGHT (Fixed Position) - UPDATED FOR LIGHT MODE */
         .showcase-visual {
           position: relative;
           height: 500px;
@@ -594,9 +598,13 @@ const MobileShopBanner: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          background: #ffffff; /* White background for light mode */
+          border: 1px solid #e5e7eb; /* Light border for light mode */
         }
 
         .dark .showcase-image-container {
+          background: #0f172a; /* Original dark background */
+          border: 1px solid #374151; /* Dark border for dark mode */
           box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
 
@@ -606,6 +614,11 @@ const MobileShopBanner: React.FC = () => {
           object-fit: contain;
           transition: transform 0.8s ease;
           padding: 20px;
+          filter: brightness(1) contrast(1); /* Natural colors for light mode */
+        }
+
+        .dark .showcase-image {
+          filter: brightness(1.1) contrast(1.1); /* Slightly brighter for dark mode */
         }
 
         .showcase-image-container:hover .showcase-image {
@@ -733,7 +746,7 @@ const MobileShopBanner: React.FC = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(16, 185, 129, 0.8) 100%);
+          background: linear-gradient(135deg, rgba(234, 88, 12, 0.9) 0%, rgba(251, 146, 60, 0.8) 100%);
           z-index: 1;
         }
 
@@ -742,11 +755,11 @@ const MobileShopBanner: React.FC = () => {
         }
 
         .slide:nth-child(3)::before {
-          background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(248, 113, 113, 0.8) 100%);
+          background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(16, 185, 129, 0.8) 100%);
         }
 
         .slide:nth-child(4)::before {
-          background: linear-gradient(135deg, rgba(234, 88, 12, 0.9) 0%, rgba(251, 146, 60, 0.8) 100%);
+          background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(248, 113, 113, 0.8) 100%);
         }
 
         .slide-content {
@@ -1344,15 +1357,9 @@ const MobileShopBanner: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Image Side - RIGHT */}
+                {/* Image Side - RIGHT - UPDATED FOR BOTH MODES */}
                 <div className="showcase-visual">
-                  <div 
-                    className="showcase-image-container"
-                    style={{ 
-                      backgroundColor: showcaseData[activeProduct]?.color,
-                      background: `linear-gradient(135deg, ${showcaseData[activeProduct]?.color}99, ${showcaseData[activeProduct]?.color}66)`
-                    }}
-                  >
+                  <div className="showcase-image-container">
                     <img 
                       src={showcaseData[activeProduct]?.image} 
                       alt={showcaseData[activeProduct]?.title}
